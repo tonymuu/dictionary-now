@@ -7,11 +7,10 @@
     function showMeaning (event){
         var createdDiv,
             info = getSelectionInfo(event);
-
         if (!info) { return; }
 
         retrieveMeaning(info)
-            .then((response) => {                
+            .then((response) => {      
                 if (!response.content) { return noMeaningFound(createdDiv); }
 
                 appendToDiv(createdDiv, response.content);
