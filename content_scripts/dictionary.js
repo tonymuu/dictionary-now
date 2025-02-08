@@ -12,7 +12,6 @@
         retrieveMeaning(info)
             .then((response) => {      
                 if (!response.content) { return noMeaningFound(createdDiv); }
-
                 appendToDiv(createdDiv, response.content);
             });
 

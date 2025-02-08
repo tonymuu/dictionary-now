@@ -3,13 +3,14 @@ const DEFAULT_HISTORY_SETTING = {
     };
 
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const { word, lang } = request, 
-        url = constructUrl(word.trim().toLowerCase());
+    const { word, lang } = request,
+        sanitizedWord = word.trim().toLowerCase(),
+        url = constructUrl(sanitizedWord);
 
     fetch(url)
         .then(res => res.json())
         .then((result) => {
-            const content = { word: word, meaning: result[word], audioSrc: null };
+            const content = { word: sanitizedWord, meaning: result[sanitizedWord], audioSrc: null };
 
             sendResponse({ content });
 
@@ -18,7 +19,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         
                 history.enabled && saveWord(content)
             });
-        })
+        });
 
     return true;
 });
